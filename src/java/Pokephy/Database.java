@@ -16,7 +16,8 @@ public class Database {
     //Constructor
     private Connection connexion;
     
-    public Database(String url, String user, String password) {
+    //SINGLETON
+    private Database(String url, String user, String password) {
         //DEFINE JDBC objects for connection
         try {
             connexion = DriverManager.getConnection(url, user, password);
@@ -26,6 +27,7 @@ public class Database {
             System.out.println("failed to connect to " + url + "  for " + user);
         }
     }
+    public static Database instance = new Database("jdbc:mysql://localhost:3306/pokephy", "root", "");
 
     /* *****************************************************************************************/
     /* JSP GETTERS AND SETTERS */ 

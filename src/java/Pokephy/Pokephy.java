@@ -153,8 +153,7 @@ public class Pokephy {
     
     public static void main(String args[])
     {
-        Database db = new Database("jdbc:mysql://localhost:3306/pokephy", "root", "");
-        db.executeTestQuery();
+        Database.instance.executeTestQuery();
     }
     
 }
