@@ -3,6 +3,7 @@ package Pokephy;
 
 import Pokephy.Pokephy.Skill.SkillType;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -105,6 +106,8 @@ public class Pokephy {
     }
     public static class PhysicalSkill extends Skill
     {
+        public static PhysicalSkill test = new PhysicalSkill("testSkillP",Type.Fire,defaultPower);
+        
         public PhysicalSkill(String name,Type type, double power) 
         {
             super(name,type, SkillType.Physical, power);
@@ -112,6 +115,8 @@ public class Pokephy {
     }
     public static class SpecialSkill extends Skill
     {
+        public static SpecialSkill test = new SpecialSkill("testSkillS",Type.Water,defaultPower);
+        
         public SpecialSkill(String name,Type type, double power) 
         {
             super(name,type, SkillType.Special, power);
@@ -133,23 +138,29 @@ public class Pokephy {
         public double getSPATK(){ return SP_ATK; }
         public double getSPDEF(){ return SP_DEF; }
         public double getSPEED(){ return SPEED; }
+        public void setATK(double ATK){ this.ATK = ATK; }
+        public void setDEF(double DEF){ this.DEF = DEF; }
+        public void setSPATK(double SP_ATK){ this.SP_ATK = ATK; }
+        public void setSPDEF(double SP_DEF){ this.SP_DEF = SP_DEF; }
+        public void setSPEED(double SPEED){ this.SPEED = SPEED; }
+        
              
-        private final Type type;
+        private Type type;
         public Type getType(){ return type; }
+        public void setType(Type type){ this.type = type; } 
         
         private Trainer trainer;
         public Trainer getTrainer(){ return trainer; }
         
-        public PhysicalSkill physicalSkill;
-        public SpecialSkill specialSkill;
+        public Skill physicalSkill,specialSkill;
         
         Pokemon(String name, Type type, double HP, double ATK, double DEF, double SP_ATK, double SP_DEF, double SPEED)
         {
             super(name);
             
             this.type = type;
-                this.physicalSkill = new PhysicalSkill("testSkillP",type,Skill.defaultPower);
-                this.specialSkill = new SpecialSkill("testSkillS",type,Skill.defaultPower);
+                this.physicalSkill = PhysicalSkill.test;
+                this.specialSkill = SpecialSkill.test;
             
             this.HP = HP;
             this.ATK = ATK;
@@ -200,8 +211,18 @@ public class Pokephy {
         Skill es = db.executeSkillExtraction();
         System.out.println(es.getName() + " " + es.power + " "+ es.skilltype+ " " + es.type);//OK
         
-        /* TEST Trainer & Pokemon insertion */
+        /* TEST Trainer & Pokemon insertion *
         db.executeTestTrainerAndPokemonInsertion();
+        
+        /* TEST list of all entities of a certain type */
+        //db.insertSkill(PhysicalSkill.test);
+        //db.insertSkill(SpecialSkill.test);
+//        for (Named n : db.getAll("POKEMON"))
+//            System.out.println(n.getId()+" "+n.getName());
+        for (Pokemon p : db.getAllPokemon())
+            System.out.println(p.getId()+" "+p.getName());
+            
+            
     }
     
 }

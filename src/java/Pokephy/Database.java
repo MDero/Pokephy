@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -493,11 +494,16 @@ public class Database {
                 valueEntity.equals("GRASS") ? Type.Grass : null ;
 //        Type type = getOrCreateEntity(id,"TYPE");
     }
+    private Type getTypeNamed(String name)
+    {
+        return getTypeFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='TYPE' AND valueEntity='"+name+"'",true));
+    }
     private Skill getSkillFromCurrentRow(ResultSet results)
     {
         Integer id = extractNumber(results,"idEntity");
         String valueEntity = extractString(results, "valueEntity");
         Skill s = new Skill(valueEntity,null, null, 0);
+        s.setId(id);
         
         //other statement to get all the lines bound to this entity
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE idEntity = "+id);
@@ -519,7 +525,65 @@ public class Database {
         
         return s;
     }
-    //private Pokemon getPokemonFromCurrentRow()
+    private Skill getSkillNamed(String name)
+    {
+        return getSkillFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='SKILL' AND valueEntity='"+name+"'",true));
+    }
+    
+    private Pokemon getPokemonFromCurrentRow(ResultSet results)
+    {
+        Integer id = extractNumber(results,"idEntity");
+        String valueEntity = extractString(results, "valueEntity");
+        Pokemon p = new Pokemon(valueEntity,null,0,0,0,0,0,0);
+        p.setId(id);
+        
+        //other statement to get all the lines bound to this entity
+        ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE idEntity = "+id);
+        try {
+            while (rs.next())
+            {
+                String name = extractString(rs, "name");
+                String value = extractString(rs , "value");
+                
+                switch (name) {
+                    case "TYPE":
+                        p.setType(getTypeNamed(value));
+                        break;
+                    case "HP":
+                        p.setHP(extractDouble(rs,"value"));
+                        break;
+                    case "ATK":
+                        p.setATK(extractDouble(rs,"value"));
+                        break;
+                    case "DEF":
+                        p.setDEF(extractDouble(rs,"value"));
+                        break;
+                    case "SP_ATK":
+                        p.setSPATK(extractDouble(rs,"value"));
+                        break;
+                    case "SP_DEF":
+                        p.setSPDEF(extractDouble(rs,"value")); 
+                        break;
+                    case "SPEED":
+                        p.setSPEED(extractDouble(rs,"value"));
+                        break;
+                    case "SKILL_SPECIAL":
+                        p.specialSkill = getSkillNamed(value);
+                        break;
+                    case "SKILL_PHYSICAL":
+                        p.physicalSkill = getSkillNamed(value);
+                        break;
+                }
+                    
+                
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return p;
+    }
     
     /* LISTS OF ALL *
     private ArrayList<?> generateListOfAllWhere(String typeEntity, String where_field, String where_value){
@@ -571,9 +635,38 @@ public class Database {
 
         return list;
     }
-    public List<?> getAll(String typeEntity)
-    {
-        
-    }
     */
+    public List<Named> getAll(String typeEntity)
+    {
+      ArrayList<Named> list = new ArrayList<>();
+      
+      ResultSet rs = this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='"+typeEntity+"'");
+        try {
+            while (rs.next())
+            {
+                switch (typeEntity){
+                    case "POKEMON":
+                        list.add(getPokemonFromCurrentRow(rs));
+                        break;
+                    case "SKILL":
+                        list.add(getSkillFromCurrentRow(rs));
+                        break;
+                }
+                    
+                            
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      return list;
+    }
+    public List<Pokemon> getAllPokemon()
+    {
+        ArrayList<Pokemon> pokelist = new ArrayList<>();
+        for (Named n : getAll("POKEMON"))
+            pokelist.add((Pokemon) n);
+        
+        return pokelist;
+    }
 }
