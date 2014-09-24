@@ -23,6 +23,11 @@ public class Pokephy {
         
         public ArrayList<Pokemon> pool = new ArrayList<>();
         public Pokemon[] team = new Pokemon[6];
+        
+        private int id;
+        void setId(int id) {
+            this.id = id;
+        }
     }
     
     /* POKEMON DEFINITION */
@@ -48,6 +53,11 @@ public class Pokephy {
             Grass.strongAgainst = Water;
             Grass.weakAgainst = Fire;
         }
+
+        private int id;
+        void setId(int id) {
+            this.id = id;
+        }
     }
     
     public static class Skill
@@ -72,6 +82,11 @@ public class Pokephy {
         
         public boolean isPhysical(){ return skilltype==SkillType.Physical; }
         public boolean isSpecial(){ return skilltype==SkillType.Special; }
+    
+        private int id;
+        void setId(int id) {
+            this.id = id;
+        }
     }
     public static class PhysicalSkill extends Skill
     {
@@ -131,6 +146,11 @@ public class Pokephy {
             this.SPEED = SPEED;
         }
         
+        private int id;
+        void setId(int id) {
+            this.id = id;
+        }
+        
         /* FIGHT MANAGEMENT */
         public void attack(Pokemon opponent, Skill skill)
         {
@@ -153,7 +173,18 @@ public class Pokephy {
     
     public static void main(String args[])
     {
-        Database.instance.executeTestQuery();
+        Database db = Database.instance;
+        
+        /* TEST CONNEXION */
+        //db.executeTestQuery();//OK
+        
+        /* TEST TYPE INSERTION */
+        Type.init();//initialize type balance
+        //db.insertType(Type.Fire);//OK
+        //db.insertType(Type.Water);//OK
+        //db.insertType(Type.Grass);//OK
+        
+        
     }
     
 }

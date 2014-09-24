@@ -1,5 +1,6 @@
 package Pokephy;
 
+import Pokephy.Pokephy.Type;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -143,14 +144,17 @@ public class Database {
             String insert = "INSERT INTO "+table.toUpperCase()+" values(";
             
             for (int i = 0; i<values.length;i++)
-                insert+= values[i]+ (i==values.length-1 ? "" : ",");
+                insert+= "'"+values[i]+"'" + (i==values.length-1 ? "" : ",");
             
             insert += ");";
             
-            s.executeQuery(insert);
+            System.out.println(insert);
+            
+            s.executeUpdate(insert);
             s.closeOnCompletion();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         
     }//OBSOLETE : should not be used (see rules)
@@ -187,7 +191,7 @@ public class Database {
             
             //GET THE LAST ID GENERERATED
             getIDGenerated = this.connexion.createStatement();
-            insert = "SELECT MAX(ID_" + table.toUpperCase() + ") FROM "+table.toUpperCase()+"";
+            insert = "SELECT MAX(id" + table.substring(0,1).toUpperCase() + table.substring(1).toLowerCase() + ") FROM "+table.toUpperCase()+"";
             
             generatedID = getIDGenerated.executeQuery(insert);
             while(generatedID.next()) {
@@ -228,7 +232,33 @@ public class Database {
  */
     public void executeTestQuery()
     {
-        ResultSet rs = this.getResultsOfQuery("SELECT * FROM OBJECT;");
+        ResultSet rs = this.getResultsOfQuery("SELECT * FROM ENTITY;");
+    }
+    
+    public void insertType(Type type)
+    {
+        //insert entity
+        int id = this.insertIntoTableValuesForFields(
+                "entity",
+                "(valueEntity,typeEntity)",
+                type.name(),
+                "TYPE"
+        );
+        type.setId(id);
+
+        //map its caracteristics values
+        this.insertIntoTableAllValues(
+                "entity_caracteristic",
+                id,
+                17,//STRONG_AGAINST
+                type.strongAgainst.name()
+        );
+        this.insertIntoTableAllValues(
+                "entity_caracteristic",
+                id,
+                18,//WEAK_AGAINST
+                type.weakAgainst.name()
+        );
     }
     
 }
