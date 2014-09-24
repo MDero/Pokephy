@@ -272,6 +272,15 @@ public class Database {
     public void close() throws SQLException {
         connexion.close();
     }
+    public void clearAllData()
+    {
+        this.executeSQLQuery("DELETE FROM entity_caracteristic");
+        this.executeSQLQuery("DELETE FROM entity");
+    }
+    public void clearUnusedEntities()
+    {
+        this.executeSQLQuery("DELETE FROM entity_caracteristic WHERE idE NOT IN(SELECT idEntity FROM entity)");
+    }
     public void clear(String typeEntity)
     {
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='"+typeEntity+"'");
@@ -279,13 +288,16 @@ public class Database {
         try {
             while (rs.next())
             {
-                entries.add(extractString(rs,"idEntity"));
+                String s = extractString(rs,"idEntity");
+                if (!entries.contains(s))
+                    entries.add(s);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (String e : entries)
         {   
+            System.out.println(e);
             this.executeSQLQuery("DELETE FROM entity_caracteristic WHERE idE="+e);
             this.executeSQLQuery("DELETE FROM entity WHERE idEntity="+e);
         }
@@ -583,6 +595,10 @@ public class Database {
         }
         
         return p;
+    }
+    private Pokemon getPokemonNamed(String name)
+    {
+        return getPokemonFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='POKEMON' AND valueEntity='"+name+"'", true));
     }
     
     /* LISTS OF ALL *

@@ -193,30 +193,32 @@ public class Pokephy {
     public static void main(String args[])
     {
         Database db = Database.instance;
+        db.clearAllData();
+//        db.clearUnusedEntities();
         
         /* TEST CONNEXION */
         //db.executeTestQuery();//OK
         
-        /* TEST TYPE INSERTION *
+        /* TEST TYPE INSERTION */
         Type.init();//initialize type balance
         db.insertType(Type.Fire);//OK
         db.insertType(Type.Water);//OK
         db.insertType(Type.Grass);//OK
         
-        /* TEST SKILL INSERTION *
+        /* TEST SKILL INSERTION */
         Skill s = new Skill("Flammèche",Type.Fire,SkillType.Special,30);
         db.insertSkill(s);//OK
         
-        /* TEST Extracting skill *
+        /* TEST Extracting skill */
         Skill es = db.executeSkillExtraction();
         System.out.println(es.getName() + " " + es.power + " "+ es.skilltype+ " " + es.type);//OK
         
-        /* TEST Trainer & Pokemon insertion *
+        /* TEST Trainer & Pokemon insertion */
         db.executeTestTrainerAndPokemonInsertion();
         
         /* TEST list of all entities of a certain type */
-        //db.insertSkill(PhysicalSkill.test);
-        //db.insertSkill(SpecialSkill.test);
+        db.insertSkill(PhysicalSkill.test);
+        db.insertSkill(SpecialSkill.test);
 //        for (Named n : db.getAll("POKEMON"))
 //            System.out.println(n.getId()+" "+n.getName());
         for (Pokemon p : db.getAllPokemon())
