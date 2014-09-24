@@ -19,7 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Database {
-    /* *****************************************************************************************/
+/******************************************************************************************
+ * DEFINITION
+*****************************************************************************************/
 
     //MEGATABLE name
     private final String megatable = "entity INNER JOIN entity_caracteristic on entity.idEntity=entity_caracteristic.idE INNER JOIN caracteristic on entity_caracteristic.idC=caracteristic.idCaracteristic";
@@ -40,8 +42,9 @@ public class Database {
     }
     public static Database instance = new Database("jdbc:mysql://localhost:3306/pokephy", "root", "");
 
-    /* *****************************************************************************************/
-    /* JSP GETTERS AND SETTERS */
+/* *****************************************************************************************/
+/* JSP GETTERS AND SETTERS 
+/* *****************************************************************************************/
     public Connection getConnexion() {
         return connexion;
     }
@@ -295,9 +298,9 @@ public class Database {
         }
     }
     
-    /** ******************************************************************************************************************************************
-     * PUBLIC QUERIES
-     * ******************************************************************************************************************************************/
+/** ******************************************************************************************************************************************
+ * PUBLIC QUERIES
+ * ******************************************************************************************************************************************/
     /* SOME ADVANCED TESTS */
     public void executeTestQuery() {
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM ENTITY;");
