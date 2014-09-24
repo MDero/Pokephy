@@ -1,5 +1,7 @@
 package Pokephy;
 
+import Pokephy.Pokephy.Named;
+import Pokephy.Pokephy.Skill;
 import Pokephy.Pokephy.Type;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -235,13 +237,26 @@ public class Database {
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM ENTITY;");
     }
     
+    //INSERTION METHODS 
+    private int insertNamedEntity(Named n,String typeEntity)
+    {
+        int id = this.insertIntoTableValuesForFields(
+                "entity",
+                "(valueEntity,typeEntity)",
+                n.getName(),
+                typeEntity.toUpperCase()
+        );
+        n.setId(id);
+        return id;
+    }
+    
     public void insertType(Type type)
     {
         //insert entity
         int id = this.insertIntoTableValuesForFields(
                 "entity",
                 "(valueEntity,typeEntity)",
-                type.name(),
+                type.getName(),
                 "TYPE"
         );
         type.setId(id);
@@ -261,5 +276,30 @@ public class Database {
         );
     }
     
+    public void insertSkill(Skill skill)
+    {
+        //insert entry
+        int id = insertNamedEntity(skill, "SKILL");
+
+        //map its characteristics values
+        this.insertIntoTableAllValues(
+                "entity_caracteristic",
+                id,
+                10,//POWER
+                skill.power
+        );
+        this.insertIntoTableAllValues(
+                "entity_caracteristic",
+                id,
+                11,//SKILLTYPE
+                skill.skilltype.toString()
+        );
+        this.insertIntoTableAllValues(
+                "entity_caracteristic",
+                id,
+                12,//TYPE
+                skill.type.getName()
+        );
+    }
 }
 

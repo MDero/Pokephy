@@ -1,6 +1,7 @@
 package Pokephy;
 
 
+import Pokephy.Pokephy.Skill.SkillType;
 import java.util.ArrayList;
 
 /*
@@ -15,23 +16,39 @@ import java.util.ArrayList;
 
 public class Pokephy {
     
-    /* USER/TRAINER DEFINITION */
-    public static class Trainer
+    /* UTIL CLASS FOR NAMING AND ID */
+    public class Named 
     {
-        private String name; 
+        //NAME
+        private final String name;
         public String getName(){ return name; }
         
-        public ArrayList<Pokemon> pool = new ArrayList<>();
-        public Pokemon[] team = new Pokemon[6];
+        public Named(String name)
+        {
+            this.name = name;
+        }
         
+        //ID 
         private int id;
         void setId(int id) {
             this.id = id;
         }
     }
     
+    /* USER/TRAINER DEFINITION */
+    public static class Trainer extends Named
+    {
+        public ArrayList<Pokemon> pool = new ArrayList<>();
+        public Pokemon[] team = new Pokemon[6];
+        
+        public Trainer(String name)
+        {
+            super(name);
+        }
+    }
+    
     /* POKEMON DEFINITION */
-    public static enum Type
+    public static enum Type 
     {
         Fire("FIRE"), Water("WATER"), Grass("GRASS");
         
@@ -60,7 +77,7 @@ public class Pokephy {
         }
     }
     
-    public static class Skill
+    public static class Skill extends Named
     {
         public static double defaultPower = 50.0;
         
@@ -73,8 +90,10 @@ public class Pokephy {
         public SkillType skilltype;
         public Type type;
         
-        Skill(Type type, SkillType skilltype, double power)
+        Skill(String name,Type type, SkillType skilltype, double power)
         {
+            super(name);
+            
             this.type = type;
             this.skilltype = skilltype;
             this.power = power;
@@ -82,28 +101,23 @@ public class Pokephy {
         
         public boolean isPhysical(){ return skilltype==SkillType.Physical; }
         public boolean isSpecial(){ return skilltype==SkillType.Special; }
-    
-        private int id;
-        void setId(int id) {
-            this.id = id;
-        }
     }
     public static class PhysicalSkill extends Skill
     {
-        public PhysicalSkill(Type type, double power) 
+        public PhysicalSkill(String name,Type type, double power) 
         {
-            super(type, SkillType.Physical, power);
+            super(name,type, SkillType.Physical, power);
         }
     }
     public static class SpecialSkill extends Skill
     {
-        public SpecialSkill(Type type, double power) 
+        public SpecialSkill(String name,Type type, double power) 
         {
-            super(type, SkillType.Special, power);
+            super(name,type, SkillType.Special, power);
         }
     }
     
-    public static class Pokemon 
+    public static class Pokemon extends Named
     {
         private double HP;
         public double getHP(){ return HP; }
@@ -118,10 +132,7 @@ public class Pokephy {
         public double getSPATK(){ return SP_ATK; }
         public double getSPDEF(){ return SP_DEF; }
         public double getSPEED(){ return SPEED; }
-        
-        private final String name;
-        public String getName(){ return name; }
-        
+             
         private final Type type;
         public Type getType(){ return type; }
         
@@ -133,10 +144,11 @@ public class Pokephy {
         
         Pokemon(String name, Type type, double HP, double ATK, double DEF, double SP_ATK, double SP_DEF, double SPEED)
         {
-            this.name = name;
+            super(name);
+            
             this.type = type;
-                this.physicalSkill = new PhysicalSkill(type,Skill.defaultPower);
-                this.specialSkill = new SpecialSkill(type,Skill.defaultPower);
+                this.physicalSkill = new PhysicalSkill("testSkillP",type,Skill.defaultPower);
+                this.specialSkill = new SpecialSkill("testSkillS",type,Skill.defaultPower);
             
             this.HP = HP;
             this.ATK = ATK;
@@ -145,12 +157,7 @@ public class Pokephy {
             this.SP_DEF = SP_DEF;
             this.SPEED = SPEED;
         }
-        
-        private int id;
-        void setId(int id) {
-            this.id = id;
-        }
-        
+                
         /* FIGHT MANAGEMENT */
         public void attack(Pokemon opponent, Skill skill)
         {
@@ -180,11 +187,13 @@ public class Pokephy {
         
         /* TEST TYPE INSERTION */
         Type.init();//initialize type balance
-        //db.insertType(Type.Fire);//OK
-        //db.insertType(Type.Water);//OK
-        //db.insertType(Type.Grass);//OK
+        db.insertType(Type.Fire);//OK
+        db.insertType(Type.Water);//OK
+        db.insertType(Type.Grass);//OK
         
-        
+        /* TEST SKILL INSERTION */
+        Skill s = new Skill("Flammèche",Type.Fire,SkillType.Special,30);
+        db.insertSkill(s);//OK
     }
     
 }
