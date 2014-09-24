@@ -45,7 +45,6 @@ public class Database {
     public Connection getConnexion() {
         return connexion;
     }
-
     public void setConnexion(Connection connexion) {
         this.connexion = connexion;
     }
@@ -63,7 +62,6 @@ public class Database {
         }
         return field;
     }
-
     private static Integer extractNumber(ResultSet results, String fieldName) {
         Integer field = null;
         try {
@@ -77,8 +75,7 @@ public class Database {
         }
         return field;
     }
-    private static Double extractDouble(ResultSet results, String fieldName)
-    {
+    private static Double extractDouble(ResultSet results, String fieldName){
         Double field = null;
         try {
             if (results.getString(fieldName) != null) {
@@ -91,7 +88,6 @@ public class Database {
         }
         return field;
     }
-
     private static Date extractDate(ResultSet results, String datename) {
         Date date = null;
         try {
@@ -104,7 +100,6 @@ public class Database {
         }
         return date;
     }
-
     private static String convertDateToString(Date date) {
         return date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
     }
@@ -272,17 +267,14 @@ public class Database {
     public void close() throws SQLException {
         connexion.close();
     }
-    public void clearAllData()
-    {
+    public void clearAllData(){
         this.executeSQLQuery("DELETE FROM entity_caracteristic");
         this.executeSQLQuery("DELETE FROM entity");
     }
-    public void clearUnusedEntities()
-    {
+    public void clearUnusedEntities(){
         this.executeSQLQuery("DELETE FROM entity_caracteristic WHERE idE NOT IN(SELECT idEntity FROM entity)");
     }
-    public void clear(String typeEntity)
-    {
+    public void clear(String typeEntity){
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='"+typeEntity+"'");
         ArrayList<String> entries = new ArrayList<>();
         try {
@@ -306,15 +298,14 @@ public class Database {
     /** ******************************************************************************************************************************************
      * PUBLIC QUERIES
      * ******************************************************************************************************************************************/
+    /* SOME ADVANCED TESTS */
     public void executeTestQuery() {
         ResultSet rs = this.getResultsOfQuery("SELECT * FROM ENTITY;");
     }
-    public Skill executeSkillExtraction()
-    {
+    public Skill executeSkillExtraction(){
         return getSkillFromCurrentRow(getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='SKILL'",true));
     }
-    public void executeTestTrainerAndPokemonInsertion()
-    {
+    public void executeTestTrainerAndPokemonInsertion(){
         //clear test data
         clear("POKEMON");
         clear("TRAINER");
@@ -339,7 +330,7 @@ public class Database {
         this.insertTrainer(sacha);
     }
     
-    //INSERTION METHODS 
+    /* INSERTION METHODS */
     private int insertNamedEntity(Named n, String typeEntity) {
         int id = this.insertIntoTableValuesForFields(
                 "entity",
@@ -398,8 +389,7 @@ public class Database {
                 skill.type.getName()
         );
     }
-    public void insertPokemon(Pokemon pokemon)
-    {
+    public void insertPokemon(Pokemon pokemon){
         //insert entry
         int id = insertNamedEntity(pokemon, "POKEMON");
         
@@ -424,8 +414,7 @@ public class Database {
         this.insertIntoTableAllValues("entity_caracteristic",id,14/*SKILL_SPECIAL*/,pokemon.specialSkill.getName());
         this.insertIntoTableAllValues("entity_caracteristic",id,15/*SKILL_PHYSICAL*/,pokemon.physicalSkill.getName());
     }
-    public void insertTrainer(Trainer trainer) 
-    {
+    public void insertTrainer(Trainer trainer){
         //insert entry
         int id = insertNamedEntity(trainer, "TRAINER");
         
@@ -495,8 +484,7 @@ public class Database {
     }
 
     /* CONVERSION/PARSING METHODS */
-    private Type getTypeFromCurrentRow(ResultSet results)
-    {
+    private Type getTypeFromCurrentRow(ResultSet results){
         Integer id = extractNumber(results,"idEntity");
 //        String typeEntity = extractString(results, "typeEntity");
         String valueEntity = extractString(results, "valueEntity");
@@ -506,12 +494,11 @@ public class Database {
                 valueEntity.equals("GRASS") ? Type.Grass : null ;
 //        Type type = getOrCreateEntity(id,"TYPE");
     }
-    private Type getTypeNamed(String name)
-    {
+    private Type getTypeNamed(String name){
         return getTypeFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='TYPE' AND valueEntity='"+name+"'",true));
     }
-    private Skill getSkillFromCurrentRow(ResultSet results)
-    {
+    
+    private Skill getSkillFromCurrentRow(ResultSet results){
         Integer id = extractNumber(results,"idEntity");
         String valueEntity = extractString(results, "valueEntity");
         Skill s = new Skill(valueEntity,null, null, 0);
@@ -537,13 +524,11 @@ public class Database {
         
         return s;
     }
-    private Skill getSkillNamed(String name)
-    {
+    private Skill getSkillNamed(String name){
         return getSkillFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='SKILL' AND valueEntity='"+name+"'",true));
     }
     
-    private Pokemon getPokemonFromCurrentRow(ResultSet results)
-    {
+    private Pokemon getPokemonFromCurrentRow(ResultSet results){
         Integer id = extractNumber(results,"idEntity");
         String valueEntity = extractString(results, "valueEntity");
         Pokemon p = new Pokemon(valueEntity,null,0,0,0,0,0,0);
@@ -596,64 +581,12 @@ public class Database {
         
         return p;
     }
-    private Pokemon getPokemonNamed(String name)
-    {
+    private Pokemon getPokemonNamed(String name){
         return getPokemonFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='POKEMON' AND valueEntity='"+name+"'", true));
     }
     
-    /* LISTS OF ALL *
-    private ArrayList<?> generateListOfAllWhere(String typeEntity, String where_field, String where_value){
-        ArrayList<Object> list = new ArrayList<>();
-        typeEntity = typeEntity.toUpperCase();
-         
-        try {
-            Statement request = this.connexion.createStatement();
-
-            //request all the objects from the database
-            ResultSet results = this.getResultsOfQuery(
-                    "  SELECT * "
-                    + "FROM entity "
-                    + "INNER JOIN entity_caracteristic on entity.idEntity=entity_caracteristic.idE"
-                    + "INNER JOIN caracteristic on entity_caracteristic.idC=caracteristic.idCaracteristic"
-                    + "WHERE typeEntity = "+typeEntity
-//                    + (where_field!="" && where_value!="" ? " AND "+where_field+" = "+where_value : "") // DOES NOT ADD AND FIELD IF EMPTY
-            );
-            
-            //put the results in the list
-            while(results!=null&&results.next()){
-                list.add(
-                        "ADRESS".equals(typeEntity)?
-                                this.getAdressFromCurrentRow(results):
-                        "ORDERS".equals(typeEntity) ?
-                                this.getOrderFromCurrentRow(results) : 
-                        "CUSTOMERS".equals(typeEntity)?
-                                this.getCustomerFromCurrentRow(results):
-                         "SAMPLE".equals(typeEntity)?
-                                 this.getSampleFromCurrentRow(results):
-                         "ANIMALS".equals(typeEntity)?
-                                 this.getAnimalFromCurrentRow(results):
-                         "SPECIES".equals(typeEntity)?
-                                 this.getSpeciesFromCurrentRow(results):
-                         "CATEANIMALS".equals(typeEntity)?
-                                 this.getCategoryFromCurrentRow(results):
-                         "TYPEANAL".equals(typeEntity)?
-                                 this.getTypeAnalysisFromCurrentRow(results):
-                         "TYPESAMPLE".equals(typeEntity)?
-                                 this.getTypeSampleFromCurrentRow(results):
-                         null
-                );
-            }
-            
-            request.closeOnCompletion();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
-    */
-    public List<Named> getAll(String typeEntity)
-    {
+    /* LISTS OF ALL */
+    public List<Named> getAll(String typeEntity){
       ArrayList<Named> list = new ArrayList<>();
       
       ResultSet rs = this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='"+typeEntity+"'");
@@ -677,8 +610,7 @@ public class Database {
       
       return list;
     }
-    public List<Pokemon> getAllPokemon()
-    {
+    public List<Pokemon> getAllPokemon(){
         ArrayList<Pokemon> pokelist = new ArrayList<>();
         for (Named n : getAll("POKEMON"))
             pokelist.add((Pokemon) n);
