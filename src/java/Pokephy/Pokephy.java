@@ -33,6 +33,7 @@ public class Pokephy {
         void setId(int id) {
             this.id = id;
         }
+        public int getId(){ return id; }
     }
     
     /* USER/TRAINER DEFINITION */
@@ -185,15 +186,22 @@ public class Pokephy {
         /* TEST CONNEXION */
         //db.executeTestQuery();//OK
         
-        /* TEST TYPE INSERTION */
+        /* TEST TYPE INSERTION *
         Type.init();//initialize type balance
         db.insertType(Type.Fire);//OK
         db.insertType(Type.Water);//OK
         db.insertType(Type.Grass);//OK
         
-        /* TEST SKILL INSERTION */
+        /* TEST SKILL INSERTION *
         Skill s = new Skill("Flammèche",Type.Fire,SkillType.Special,30);
         db.insertSkill(s);//OK
+        
+        /* TEST Extracting skill *
+        Skill es = db.executeSkillExtraction();
+        System.out.println(es.getName() + " " + es.power + " "+ es.skilltype+ " " + es.type);//OK
+        
+        /* TEST Trainer & Pokemon insertion */
+        db.executeTestTrainerAndPokemonInsertion();
     }
     
 }
