@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+>
+   <h:head>
+      <title>Pokephy Alpha 0.1</title>		
+      <h:outputStylesheet name="resources/css/styles.css"  />	
+   </h:head>
+    
+   <h:body> 
+   
+   <p:layout style="min-width:400px;min-height:200px;">
+   <!-- MENU -->
+    <p:layoutUnit position="west" resizable="true" size="100" minSize="40" maxSize="200">
+        West
+    </p:layoutUnit>
+ 
+    <p:layoutUnit position="center">
+     
+   <h:graphicImage value="resources/images/pokemon_header.png" />
+   <h:form>
+      <h:dataTable value="#{userData.employees}" var="employee"
+         styleClass="employeeTable"
+         headerClass="employeeTableHeader"
+         rowClasses="employeeTableOddRow,employeeTableEvenRow">
+         <h:column>    				
+            <f:facet name="header">Name</f:facet>    				
+            #{employee.name}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Department</f:facet>
+            #{employee.department}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Age</f:facet>
+            #{employee.age}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Salary</f:facet>
+            #{employee.salary}
+         </h:column>
+          <h:column>
+              <f:facet name="header">Can edit</f:facet>
+              #{employee.canEdit}
+          </h:column>
+      </h:dataTable>
+   </h:form>
+   
+   <h:form id="form">
+    <p:carousel value="#{userData.employees}" headerText="Basic" var="employee" itemStyleClass="carItem">
+        <h:panelGrid columns="2" style="width:100%" cellpadding="5" columnClasses="label,value">
+            <f:facet name="header">
+                EMPLOYEE
+            </f:facet>
+ 
+            <h:outputText value="Name:" />
+            <h:outputText value="#{employee.name}" />
+ 
+            <h:outputText value="Age:" />
+            <h:outputText value="#{employee.age}" />
+ 
+            <h:outputText value="Department:" />
+            <h:outputText value="#{employee.department}"/>
+ 
+            <h:outputText value="Salary:" />
+            <h:outputText value="#{employee.salary} €" />
+        </h:panelGrid>
+ 
+        <f:facet name="footer">
+                In total there are #{userData.countAll()} employees.
+        </f:facet>
+    </p:carousel>
+    </h:form>
+   
+   
+    </p:layoutUnit>
+    </p:layout>
+   </h:body>
+</html>
