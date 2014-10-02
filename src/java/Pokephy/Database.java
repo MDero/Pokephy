@@ -17,7 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
+@ManagedBean(name = "database", eager = true)
+@SessionScoped
 public class Database {
 /******************************************************************************************
  * DEFINITION
@@ -28,7 +32,10 @@ public class Database {
     
     //Constructor
     private Connection connexion;
-
+    
+    public Database() {
+        this("jdbc:mysql://localhost:3306/pokephy", "root", "");
+    }
     //SINGLETON
     private Database(String url, String user, String password) {
         //DEFINE JDBC objects for connection

@@ -8,7 +8,7 @@ xmlns:p="http://primefaces.org/ui"
 >
    <h:head>
       <title>Pokephy Alpha 0.1</title>		
-      <h:outputStylesheet name="resources/css/styles.css"  />	
+      <h:outputStylesheet name="resources/css/style.css"  />	
    </h:head>
     
    <h:body> 
@@ -23,35 +23,19 @@ xmlns:p="http://primefaces.org/ui"
      
    <h:graphicImage value="resources/images/pokemon_header.png" />
    <h:form>
-      <h:dataTable value="#{userData.employees}" var="employee"
+      <h:dataTable value="#{database.getAllPokemon()}" var="pokemon"
          styleClass="employeeTable"
          headerClass="employeeTableHeader"
          rowClasses="employeeTableOddRow,employeeTableEvenRow">
          <h:column>    				
-            <f:facet name="header">Name</f:facet>    				
-            #{employee.name}
+            <f:facet name="header">Type</f:facet>    				
+            #{pokemon.type}
          </h:column>
-         <h:column>
-            <f:facet name="header">Department</f:facet>
-            #{employee.department}
-         </h:column>
-         <h:column>
-            <f:facet name="header">Age</f:facet>
-            #{employee.age}
-         </h:column>
-         <h:column>
-            <f:facet name="header">Salary</f:facet>
-            #{employee.salary}
-         </h:column>
-          <h:column>
-              <f:facet name="header">Can edit</f:facet>
-              #{employee.canEdit}
-          </h:column>
       </h:dataTable>
    </h:form>
    
    <h:form id="form">
-    <p:carousel value="#{userData.employees}" headerText="Basic" var="employee" itemStyleClass="carItem">
+    <p:carousel value="#{database.getAllPokemon()}" headerText="Basic" var="employee" itemStyleClass="carItem">
         <h:panelGrid columns="2" style="width:100%" cellpadding="5" columnClasses="label,value">
             <f:facet name="header">
                 EMPLOYEE
