@@ -38,16 +38,16 @@ xmlns:p="http://primefaces.org/ui"
     <p:carousel value="#{database.getAllPokemon()}" headerText="Basic" var="pokemon" itemStyleClass="carItem">
         <h:panelGrid columns="2" style="width:100%" cellpadding="5" columnClasses="label,value">
             <f:facet name="header">
-                EMPLOYEE
+                <h:graphicImage value="resources/images/#{pokemon.name}.gif" /><br></br>
+                <h:outputText value="#{pokemon.name}" />
             </f:facet>
- 
             <h:outputText value="Type:" />
             <h:outputText value="#{pokemon.type}" />
  
         </h:panelGrid>
  
         <f:facet name="footer">
-                In total there are  employees.
+                In total there are  pokemons.
         </f:facet>
     </p:carousel>
     </h:form>
