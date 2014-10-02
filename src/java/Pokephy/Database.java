@@ -167,7 +167,7 @@ public class Database {
                 System.out.println("NO RESULTS FOUND FOR " + query);
             }
 
-            request.closeOnCompletion();
+            //request.closeOnCompletion();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

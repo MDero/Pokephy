@@ -35,27 +35,19 @@ xmlns:p="http://primefaces.org/ui"
    </h:form>
    
    <h:form id="form">
-    <p:carousel value="#{database.getAllPokemon()}" headerText="Basic" var="employee" itemStyleClass="carItem">
+    <p:carousel value="#{database.getAllPokemon()}" headerText="Basic" var="pokemon" itemStyleClass="carItem">
         <h:panelGrid columns="2" style="width:100%" cellpadding="5" columnClasses="label,value">
             <f:facet name="header">
                 EMPLOYEE
             </f:facet>
  
-            <h:outputText value="Name:" />
-            <h:outputText value="#{employee.name}" />
+            <h:outputText value="Type:" />
+            <h:outputText value="#{pokemon.type}" />
  
-            <h:outputText value="Age:" />
-            <h:outputText value="#{employee.age}" />
- 
-            <h:outputText value="Department:" />
-            <h:outputText value="#{employee.department}"/>
- 
-            <h:outputText value="Salary:" />
-            <h:outputText value="#{employee.salary} €" />
         </h:panelGrid>
  
         <f:facet name="footer">
-                In total there are #{userData.countAll()} employees.
+                In total there are  employees.
         </f:facet>
     </p:carousel>
     </h:form>
