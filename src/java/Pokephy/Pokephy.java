@@ -18,7 +18,7 @@ import java.util.List;
 public class Pokephy {
     
     /* UTIL CLASS FOR NAMING AND ID */
-    public class Named 
+    public static class Named 
     {
         //NAME
         private final String name;
@@ -153,6 +153,8 @@ public class Pokephy {
         public Trainer getTrainer(){ return trainer; }
         
         public Skill physicalSkill,specialSkill;
+        public Skill getPhysicalSkill(){ return physicalSkill; }
+        public Skill getSpecialSkill(){ return specialSkill; }
         
         Pokemon(String name, Type type, double HP, double ATK, double DEF, double SP_ATK, double SP_DEF, double SPEED)
         {
@@ -194,31 +196,31 @@ public class Pokephy {
     {
         Database db = Database.instance;
         //db.clearAllData();
-//        db.clearUnusedEntities();
+        db.clearUnusedEntities();
         
         /* TEST CONNEXION */
-        //db.executeTestQuery();//OK
+        db.executeTestQuery();//OK
         
         /* TEST TYPE INSERTION */
-        //Type.init();//initialize type balance
-        //db.insertType(Type.Fire);//OK
-        //db.insertType(Type.Water);//OK
-        //db.insertType(Type.Grass);//OK
+        Type.init();//initialize type balance
+        db.insertType(Type.Fire);//OK
+        db.insertType(Type.Water);//OK
+        db.insertType(Type.Grass);//OK
         
         /* TEST SKILL INSERTION */
-        //Skill s = new Skill("Flammèche",Type.Fire,SkillType.Special,30);
-        //db.insertSkill(s);//OK
+        Skill s = new Skill("Flammèche",Type.Fire,SkillType.Special,30);
+        db.insertSkill(s);//OK
         
         /* TEST Extracting skill */
-        //Skill es = db.executeSkillExtraction();
-        //System.out.println(es.getName() + " " + es.power + " "+ es.skilltype+ " " + es.type);//OK
+        Skill es = db.executeSkillExtraction();
+        System.out.println(es.getName() + " " + es.power + " "+ es.skilltype+ " " + es.type);//OK
         
         /* TEST Trainer & Pokemon insertion */
-        //db.executeTestTrainerAndPokemonInsertion();
+        db.executeTestTrainerAndPokemonInsertion();
         
         /* TEST list of all entities of a certain type */
-        //db.insertSkill(PhysicalSkill.test);
-        //db.insertSkill(SpecialSkill.test);
+        db.insertSkill(PhysicalSkill.test);
+        db.insertSkill(SpecialSkill.test);
 //        for (Named n : db.getAll("POKEMON"))
 //            System.out.println(n.getId()+" "+n.getName());
         for (Pokemon p : db.getAllPokemon())

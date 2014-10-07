@@ -20,8 +20,11 @@ xmlns:p="http://primefaces.org/ui"
     </p:layoutUnit>
  
     <p:layoutUnit position="center">
-     
+   
+   <!-- HEADER -->
    <h:graphicImage value="resources/images/pokemon_header.png" />
+   
+   <!-- TYPE LIST -->
    <h:form>
       <h:dataTable value="#{database.getAllPokemon()}" var="pokemon"
          styleClass="employeeTable"
@@ -30,10 +33,25 @@ xmlns:p="http://primefaces.org/ui"
          <h:column>    				
             <f:facet name="header">Type</f:facet>    				
             #{pokemon.type}
+            <f:facet name="header">Name</f:facet>    				
+            #{pokemon.name}
+            <f:facet name="header">HP</f:facet>    				
+            #{pokemon.HP}
+            <f:facet name="header">ATK</f:facet>    				
+            #{pokemon.ATK}
+            <f:facet name="header">DEF</f:facet>    				
+            #{pokemon.DEF}
+            <f:facet name="header">SP_ATK</f:facet>    				
+            #{pokemon.SPATK}
+            <f:facet name="header">SP_DEF</f:facet>    				
+            #{pokemon.SPDEF}
+            <f:facet name="header">SPEED</f:facet>    				
+            #{pokemon.SPEED}
          </h:column>
       </h:dataTable>
    </h:form>
    
+   <!-- POKEMON OVERVIEW -->
    <h:form id="form">
     <p:carousel value="#{database.getAllPokemon()}" headerText="Basic" var="pokemon" itemStyleClass="carItem">
         <h:panelGrid columns="2" style="width:100%" cellpadding="5" columnClasses="label,value">
@@ -50,6 +68,63 @@ xmlns:p="http://primefaces.org/ui"
                 In total there are  pokemons.
         </f:facet>
     </p:carousel>
+    </h:form>
+   
+   <!-- POKEMON OVERVIEW WITH DATAGRID-->
+   <h:form id="form2">
+        <!--layout="grid"-->
+        <p:dataGrid var="pokemon" value="#{database.getAllPokemon()}" 
+            columns="3" rows="12" 
+            paginator="true" id="pokemonGrid" 
+            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="6,12,16" >
+
+            <f:facet name="header">
+               Pokemon in the database
+            </f:facet>
+
+            <p:panel header="#{pokemon.name}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <h:graphicImage value="resources/images/#{pokemon.name}.gif"/> 
+
+                    <h:outputText value="#{pokemon.type}" />
+
+                    <p:commandLink update=":form2:pokeDetail" oncomplete="PF('pokeDialog').show()" title="View Detail">
+                        <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                        <f:setPropertyActionListener value="#{pokemon}" target="#{dataGridView.selectedPokemon}" />
+                    </p:commandLink>
+
+                </h:panelGrid>
+            </p:panel>
+
+        </p:dataGrid>
+
+        <p:dialog header="Pokemon info" widgetVar="pokeDialog" 
+                  modal="false" 
+                  showEffect="fade" 
+                  hideEffect="fade" 
+                  resizable="false">
+            <p:outputPanel id="pokeDetail" style="text-align:center;">
+                <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedPokemon}" columnClasses="label,value">
+                    <f:facet name="header">
+                        <h:graphicImage value="resources/images/#{dataGridView.selectedPokemon.name}.gif"/> 
+                    </f:facet>
+
+                    <h:outputText value="Name:" />
+                    <h:outputText value="#{dataGridView.selectedPokemon.name}" />
+
+                    <h:outputText value="Type:" />
+                    <h:outputText value="#{dataGridView.selectedPokemon.type}" />
+
+                    <h:outputText value="Physical Skill" />
+                    <h:outputText value="#{dataGridView.selectedPokemon.physicalSkill.name}"/>
+                    
+                    <h:outputText value="Special Skill" />
+                    <h:outputText value="#{dataGridView.selectedPokemon.specialSkill.name}"/>
+
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:dialog>
     </h:form>
    
    
