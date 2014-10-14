@@ -17,8 +17,9 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     </h:head>
     <h:body>
         
-    <p:tabView scrollable="true">
-        <p:tab title="Encyclopedia">
+    <!-- TAB MENU -->
+    <p:tabView id="tabView" scrollable="true">
+        <p:tab title="Encyclopedia" id="tab_encyclopedia">
             <ui:include src="/encyclopediapage.xhtml" />
         </p:tab>
         <p:tab title="Catch Pokemon!">
@@ -35,6 +36,58 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
         </p:tab>
                
     </p:tabView>
+        
+    <!-- POKEDETAIL WIDGET: placing it here makes it visible even when changing tab ! -->
+    <p:dialog header="Pokemon info" widgetVar="pokeDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="pokeDetail" style="text-align:center;">
+          <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedPokemon}" columnClasses="label,value">
+              <f:facet name="header">
+                  <h:graphicImage value="resources/images/#{dataGridView.selectedPokemon.name}.gif"/> 
+              </f:facet>
+              
+              <h:outputText value="Name:" />
+              <h:outputText value="#{dataGridView.selectedPokemon.name}" />
+
+              <h:outputText value="Type:" />
+              <h:outputText value="#{dataGridView.selectedPokemon.type}" />
+
+              <h:outputText value="Physical Skill" />
+              <h:outputText value="#{dataGridView.selectedPokemon.physicalSkill.name}"/>
+
+              <h:outputText value="Special Skill" />
+              <h:outputText value="#{dataGridView.selectedPokemon.specialSkill.name}"/>
+
+          </p:panelGrid>
+            
+          <p:dataTable var="pokemon" value="#{dataGridView.selectedPokemon}">
+              
+                <p:column width="0.05" headerText="HP">
+                <h:outputText value="#{pokemon.HP}" />
+                </p:column>
+
+                <p:column width="0.05" headerText="ATK">
+                <h:outputText value="#{pokemon.ATK}" />
+                </p:column>
+
+                <p:column width="0.05" headerText="DEF">
+                <h:outputText value="#{pokemon.DEF}" />
+                </p:column>
+
+                <p:column width="0.05" headerText="SPATK">
+                <h:outputText value="#{pokemon.SPATK}" />
+                </p:column>
+
+                <p:column width="0.05" headerText="SPDEF">
+                <h:outputText value="#{pokemon.SPDEF}" />
+                </p:column>
+
+                <p:column width="0.05" headerText="SPEED">
+                <h:outputText value="#{pokemon.SPEED}" />
+                </p:column>
+          </p:dataTable>
+            
+        </p:outputPanel>
+    </p:dialog>
         
         
     </h:body>

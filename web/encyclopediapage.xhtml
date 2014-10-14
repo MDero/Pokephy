@@ -1,16 +1,41 @@
 <ui:composition 
+    id="encyclopedia_composition"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-    
-    
-    
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
     <h2>Encyclopedia</h2>
     <p>Find all the information you need!</p>
 
+    <!-- POKEMON OVERVIEW WITH DATAGRID-->
+    <h:form id="pokeForm">
+        <p:dataGrid id="pokemonGrid" var="pokemon" value="#{database.getAllPokemon()}" columns="3" rows="12" paginator="true" 
+            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="6,12,16" >
 
+            <f:facet name="header">
+               Pokemon in the database
+            </f:facet>
 
+            <p:panel header="#{pokemon.name}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <h:graphicImage value="resources/images/#{pokemon.name}.gif"/> 
 
+                    <h:outputText value="#{pokemon.type}" />
+
+                    <!--<p:commandLink update=":tabView:pokeForm:pokeDetail" oncomplete="PF('pokeDialog').show()" title="View Detail">-->
+                    <p:commandLink update=":pokeDetail" oncomplete="PF('pokeDialog').show()" title="View Detail">
+                        <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                        <f:setPropertyActionListener value="#{pokemon}" target="#{dataGridView.selectedPokemon}" />
+                    </p:commandLink>
+
+                </h:panelGrid>
+            </p:panel>
+
+        </p:dataGrid>
+
+    </h:form>
+    
 </ui:composition>
