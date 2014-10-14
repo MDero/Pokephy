@@ -10,7 +10,7 @@ and open the template in the editor.
 xmlns:h="http://java.sun.com/jsf/html"
 xmlns:f="http://java.sun.com/jsf/core"
 xmlns:p="http://primefaces.org/ui"
->
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
       <title>Vincent test page</title>		
       <h:outputStylesheet name="resources/css/style.css"  />
@@ -19,19 +19,19 @@ xmlns:p="http://primefaces.org/ui"
         
     <p:tabView scrollable="true">
         <p:tab title="Encyclopedia">
-            Tab 1 Content
+            <ui:include src="/encyclopediapage.xhtml" />
         </p:tab>
         <p:tab title="Catch Pokemon!">
-            Tab 2 Content
+            <ui:include src="/catchpage.xhtml" />
         </p:tab>
         <p:tab title="Team Management">
-            Tab 3 Content
+            <ui:include src="/teammanagement.xhtml" />
         </p:tab>
         <p:tab title="Fight!">
-            Tab 4 Content
+            <ui:include src="/fightpage.xhtml" />
         </p:tab>
         <p:tab title="Statistics">
-            Tab 5 Content
+            <ui:include src="/statisticspage.xhtml" />
         </p:tab>
                
     </p:tabView>
