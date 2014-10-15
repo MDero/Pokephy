@@ -40,52 +40,28 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <!-- POKEDETAIL WIDGET: placing it here makes it visible even when changing tab ! -->
     <p:dialog header="Pokemon info" widgetVar="pokeDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false">
         <p:outputPanel id="pokeDetail" style="text-align:center;">
-          <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedPokemon}" columnClasses="label,value">
-              <f:facet name="header">
-                  <h:graphicImage value="resources/images/#{dataGridView.selectedPokemon.name}.gif"/> 
-              </f:facet>
-              
-              <h:outputText value="Name:" />
-              <h:outputText value="#{dataGridView.selectedPokemon.name}" />
-
-              <h:outputText value="Type:" />
-              <h:outputText value="#{dataGridView.selectedPokemon.type}" />
-
-              <h:outputText value="Physical Skill" />
-              <h:outputText value="#{dataGridView.selectedPokemon.physicalSkill.name}"/>
-
-              <h:outputText value="Special Skill" />
-              <h:outputText value="#{dataGridView.selectedPokemon.specialSkill.name}"/>
-
-          </p:panelGrid>
             
-          <p:dataTable var="pokemon" value="#{dataGridView.selectedPokemon}">
-              
-                <p:column width="0.05" headerText="HP">
-                <h:outputText value="#{pokemon.HP}" />
-                </p:column>
+            <!-- BASIC INFO -->
+            <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedPokemon}" columnClasses="label,value">
+                
+                <f:facet name="header">
+                    <h:graphicImage value="resources/images/#{dataGridView.selectedPokemon.name}.gif"/> 
+                </f:facet>
 
-                <p:column width="0.05" headerText="ATK">
-                <h:outputText value="#{pokemon.ATK}" />
-                </p:column>
+                <h:outputText value="Name:" style="width:100px" />
+                <h:outputText value="#{dataGridView.selectedPokemon.name}" />
 
-                <p:column width="0.05" headerText="DEF">
-                <h:outputText value="#{pokemon.DEF}" />
-                </p:column>
+                <h:outputText value="Type:" />
+                <h:outputText value="#{dataGridView.selectedPokemon.type}" />
 
-                <p:column width="0.05" headerText="SPATK">
-                <h:outputText value="#{pokemon.SPATK}" />
-                </p:column>
+                <h:outputText value="Physical Skill" />
+                <h:outputText value="#{dataGridView.selectedPokemon.physicalSkill.name}"/>
 
-                <p:column width="0.05" headerText="SPDEF">
-                <h:outputText value="#{pokemon.SPDEF}" />
-                </p:column>
-
-                <p:column width="0.05" headerText="SPEED">
-                <h:outputText value="#{pokemon.SPEED}" />
-                </p:column>
-          </p:dataTable>
-            
+                <h:outputText value="Special Skill" />
+                <h:outputText value="#{dataGridView.selectedPokemon.specialSkill.name}"/>
+                
+            </p:panelGrid>
+            <p:chart type="bar" model="#{chartView.createStatsBarModel(dataGridView.selectedPokemon)}" style="height:300px"/>
         </p:outputPanel>
     </p:dialog>
         

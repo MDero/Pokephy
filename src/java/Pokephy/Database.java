@@ -321,9 +321,9 @@ public class Database {
         clear("TRAINER");
         
         //create dummy Pokemons 
-        Pokemon p1 = new Pokemon("bulbasaur", Type.Grass, 50, 50, 50, 50, 50, 50);
-        Pokemon p2 = new Pokemon("charmander", Type.Fire, 50, 50, 50, 50, 50, 50);
-        Pokemon p3 = new Pokemon("squirtle", Type.Water, 50, 50, 50, 50, 50, 50);
+        Pokemon p1 = new Pokemon("bulbasaur", Type.Grass, 45, 49, 49, 65, 65, 45);
+        Pokemon p2 = new Pokemon("charmander", Type.Fire, 39, 52, 43, 60, 50, 65);
+        Pokemon p3 = new Pokemon("squirtle", Type.Water, 44, 48, 65, 50, 64, 43);
         
         //create a dummy trainer
         Trainer sacha = new Trainer("Sacha");
