@@ -41,47 +41,47 @@ public class ChartView implements Serializable {
             /* Make series for each stat with a color corresponding to the value */
             ChartSeries hp = new ChartSeries(),atk = new ChartSeries(), def = new ChartSeries(),spatk = new ChartSeries(),spdef = new ChartSeries(),speed = new ChartSeries();
             
-            hp.set("HP", p.getHP());
-            hp.set("ATK", 0);
-            hp.set("DEF",0);
-            hp.set("SPATK",0);
-            hp.set("SPDEF",0);
             hp.set("SPEED",0);
+            hp.set("SPDEF",0);
+            hp.set("SPATK",0);
+            hp.set("DEF",0);
+            hp.set("ATK", 0);
+            hp.set("HP", p.getHP());
             
-            atk.set("HP",0);
-            atk.set("ATK", p.getATK());
-            atk.set("DEF",0);
-            atk.set("SPATK",0);
-            atk.set("SPDEF",0);
             atk.set("SPEED",0);
+            atk.set("SPDEF",0);
+            atk.set("SPATK",0);
+            atk.set("DEF",0);
+            atk.set("ATK", p.getATK());
+            atk.set("HP",0);
             
-            def.set("HP",0);
-            def.set("ATK",0);
-            def.set("DEF", p.getDEF());
-            def.set("SPATK",0);
-            def.set("SPDEF",0);
             def.set("SPEED",0);
+            def.set("SPDEF",0);
+            def.set("SPATK",0);
+            def.set("DEF", p.getDEF());
+            def.set("ATK",0);
+            def.set("HP",0);
             
-            spatk.set("HP",0);
-            spatk.set("ATK",0);
-            spatk.set("DEF",0);
-            spatk.set("SPATK", p.getSPATK());
-            spatk.set("SPDEF",0);
             spatk.set("SPEED",0);
+            spatk.set("SPDEF",0);
+            spatk.set("SPATK", p.getSPATK());
+            spatk.set("DEF",0);
+            spatk.set("ATK",0);
+            spatk.set("HP",0);
             
-            spdef.set("HP",0);
-            spdef.set("ATK",0);
-            spdef.set("DEF",0);
-            spdef.set("SPATK", 0);
-            spdef.set("SPDEF", p.getSPDEF());
             spdef.set("SPEED",0);
+            spdef.set("SPDEF", p.getSPDEF());
+            spdef.set("SPATK", 0);
+            spdef.set("DEF",0);
+            spdef.set("ATK",0);
+            spdef.set("HP",0);
 
-            speed.set("HP",0);
-            speed.set("ATK",0);
-            speed.set("DEF",0);
-            speed.set("SPATK", 0);
-            speed.set("SPDEF", 0);
             speed.set("SPEED", p.getSPEED());
+            speed.set("SPDEF", 0);
+            speed.set("SPATK", 0);
+            speed.set("DEF",0);
+            speed.set("ATK",0);
+            speed.set("HP",0);
             
             //calculate colors
             String hpColor,atkColor,defColor,spatkColor, spdefColor, speedColor;
@@ -95,20 +95,30 @@ public class ChartView implements Serializable {
            
             
             /* Calculate color */
-            String red = "cc6666";
-            String green = "00FF00";
-            String blue = "0000FF";
+//            String red = "cc6666";
+//            String green = "00FF00";
+//            String blue = "0000FF";
 //            
-            hpColor = hpRatio > 0.3 ? hpRatio > 0.6 ? green : blue : red;
-            atkColor = atkRatio > 0.3 ? atkRatio > 0.6 ? green : blue : red;
-            defColor = defRatio > 0.3 ? defRatio > 0.6 ? green : blue : red;
-            spatkColor = spatkRatio > 0.3 ? spatkRatio > 0.6 ? green : blue : red;
-            spdefColor = spdefRatio > 0.3 ? spdefRatio > 0.6 ? green : blue : red;
-            speedColor = speedRatio > 0.3 ? speedRatio > 0.6 ? green : blue : red;
+//            hpColor = hpRatio > 0.3 ? hpRatio > 0.6 ? green : blue : red;
+//            atkColor = atkRatio > 0.3 ? atkRatio > 0.6 ? green : blue : red;
+//            defColor = defRatio > 0.3 ? defRatio > 0.6 ? green : blue : red;
+//            spatkColor = spatkRatio > 0.3 ? spatkRatio > 0.6 ? green : blue : red;
+//            spdefColor = spdefRatio > 0.3 ? spdefRatio > 0.6 ? green : blue : red;
+//            speedColor = speedRatio > 0.3 ? speedRatio > 0.6 ? green : blue : red;
             
-            hpColor = "00"+Integer.toHexString((int) (hpRatio*150.0))+"00";
-            System.out.println(Integer.toHexString((int) (hpRatio*255.0)));
-//            System.out.println(toHexa(255.0)+"\n"+toHexa(10)+","+toHexa(16));
+            String red, blue;
+            red = "2F";
+            blue = "36";
+            int greenPlus = 31;
+            double redLevel = 125.0, greenLevel = 150.0;
+            
+            hpColor    = Integer.toHexString((int) ((1.0-hpRatio)    *redLevel)) +Integer.toHexString((int) (hpRatio    *greenLevel) +greenPlus) +blue;
+            atkColor   = Integer.toHexString((int) ((1.0-atkRatio)   *redLevel)) +Integer.toHexString((int) (atkRatio   *greenLevel) +greenPlus) +blue;
+            defColor   = Integer.toHexString((int) ((1.0-defRatio)   *redLevel)) +Integer.toHexString((int) (defRatio   *greenLevel) +greenPlus) +blue;
+            spatkColor = Integer.toHexString((int) ((1.0-spatkRatio) *redLevel)) +Integer.toHexString((int) (spatkRatio *greenLevel) +greenPlus) +blue;
+            spdefColor = Integer.toHexString((int) ((1.0-spdefRatio) *redLevel)) +Integer.toHexString((int) (spdefRatio *greenLevel) +greenPlus) +blue;
+            speedColor = Integer.toHexString((int) ((1.0-speedRatio) *redLevel)) +Integer.toHexString((int) (speedRatio *greenLevel) +greenPlus) +blue;
+
             
             /* set series colors */
             String seriesColor = hpColor+","+atkColor+","+defColor+","+spatkColor+","+spdefColor+","+speedColor;
@@ -124,6 +134,7 @@ public class ChartView implements Serializable {
             horizontalBarModel.setAnimate(true);
             horizontalBarModel.setShadow(false);
             horizontalBarModel.setZoom(true);
+            horizontalBarModel.setStacked(true);
 //            //
 //            ChartSeries stats = new ChartSeries();
 //            stats.setLabel("Stats");
