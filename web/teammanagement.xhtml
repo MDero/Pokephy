@@ -17,35 +17,61 @@
     <p:commandButton value="Hide" onclick="PF('bar').hide()" type="button" icon="ui-icon-arrow-1-n"/>
     </h:form>
 
-    <div style="height:500px">
-        <h:form>
-            <p:growl id="msgs" showDetail="true" />
-
-            <p:dashboard id="board" model="#{dashboardView.model}">
-                <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
-
-                <p:panel id="sports" header="Sports">
-                    <h:outputText value="Sports Content" />
-                </p:panel>
-
-                <p:panel id="finance" header="Finance">
-                    <h:outputText value="Finance Content" />
-                </p:panel>
-
-                <p:panel id="lifestyle" header="Lifestyle">
-                    <h:outputText value="Lifestyle Content"  />
-                </p:panel>
-
-                <p:panel id="weather" header="Weather">
-                    <h:outputText value="Weather Content" />
-                </p:panel>
-
-                <p:panel id="politics" header="Politics">
-                    <h:outputText value="Politics Content" />
-                </p:panel>
-            </p:dashboard>
-
-            <div style="clear:both" />
-        </h:form>
-    </div>
+    <h:form>
+    <p:growl id="msg" showDetail="true" escape="false" />
+ 
+    <h3 style="margin-top: 0">Basic PickList</h3>
+    <p:pickList id="pickList" value="#{pickListView.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" />
+ 
+    <p:commandButton id="citySubmit" value="Submit" update="displayCities" oncomplete="PF('cityDialog').show()" style="margin-top:5px" />
+ 
+    <h3>PickList on Steroids: Pojo Support with Effect, Captions, Custom Content, Reordering, Filtering, Checkboxes and Ajax Transfer</h3>
+    <p:pickList id="PojoPickList" value="#{pickListView.themes}" var="theme" effect="bounce"
+                itemValue="#{theme}" itemLabel="#{theme.displayName}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="theme">
+ 
+        <f:facet name="sourceCaption">Available</f:facet>
+        <f:facet name="targetCaption">Starting</f:facet>
+ 
+        <p:ajax event="transfer" listener="#{pickListView.onTransfer}" update="msg" />
+ 
+        <p:column style="width:25%">
+            <h:outputText styleClass="ui-theme ui-theme-#{theme.name}" />
+        </p:column>
+ 
+        <p:column style="width:75%;">
+            <h:outputText value="#{theme.displayName}" />
+        </p:column>
+    </p:pickList>
+ 
+    <p:commandButton id="pojoSubmit" value="Submit" update="displayThemes" oncomplete="PF('themesDialog').show()" style="margin-top:5px" />
+ 
+    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog">
+        <h:panelGrid id="displayCities" columns="2">
+            <h:outputText value="Source: " style="font-weight:bold" />
+             <ui:repeat value="#{pickListView.cities.source}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+ 
+            <h:outputText value="Target: " style="font-weight:bold" />
+            <ui:repeat value="#{pickListView.cities.target}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+        </h:panelGrid>
+    </p:dialog>
+ 
+    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="themesDialog">
+        <h:panelGrid id="displayThemes" columns="2">
+            <h:outputText value="Source: " style="font-weight:bold" />
+            <ui:repeat value="#{pickListView.themes.source}" var="theme">
+                <h:outputText value="#{theme.name}" style="margin-right:5px" />
+            </ui:repeat>
+ 
+            <h:outputText value="Target: " style="font-weight:bold" />
+            <ui:repeat value="#{pickListView.themes.target}" var="theme">
+                <h:outputText value="#{theme.name}" style="margin-right:5px" />
+            </ui:repeat>
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
 </ui:composition>
