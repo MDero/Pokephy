@@ -1,6 +1,7 @@
 package Pokephy;
 
 import Pokephy.Pokephy.Named;
+import Pokephy.Pokephy.PhysicalSkill;
 import Pokephy.Pokephy.Pokemon;
 import Pokephy.Pokephy.Skill;
 import Pokephy.Pokephy.Skill.SkillType;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -642,5 +644,30 @@ public class Database {
             pokelist.add((Pokemon) n);
         
         return pokelist;
+    }
+    public List<Type> getAllTypes(){
+        ArrayList<Type> typelist = new ArrayList<>();
+        typelist.addAll(Arrays.asList(Type.values()));
+        return typelist;
+    }
+    private List<Skill> getAllSkills(SkillType st)
+    {
+        ArrayList<Skill> skills = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        for (Named n : getAll("SKILL"))
+            if (((Skill)n).skilltype==st && !(names.contains(n.getName())))
+            {
+                names.add(n.getName());
+                skills.add((Skill)n);
+            }
+        return skills;
+    }
+    public List<Skill> getAllPhysicalSkills()
+    {
+        return getAllSkills(SkillType.Physical);
+    }
+    public List<Skill> getAllSpecialSkills()
+    {
+        return getAllSkills(SkillType.Special);
     }
 }

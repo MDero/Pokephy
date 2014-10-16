@@ -5,6 +5,8 @@
  */
 package Pokephy;
 
+import Pokephy.Pokephy.Pokemon;
+import Pokephy.Pokephy.Type;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -21,9 +23,8 @@ public class addPokemon {
         private String type;
         private String physicalSkill;
         private String specialSkill;
-        public String HP, DEF, SP_ATK, SP_DEF, SPEED;
+        public String HP, ATK, DEF, SP_ATK, SP_DEF, SPEED;
         public String GIF;
-        public int ATK;
 
     public String getGIF() {
         return GIF;
@@ -59,11 +60,11 @@ public class addPokemon {
         this.HP = HP;
     }
 
-    public int getATK() {
+    public String getATK() {
         return ATK;
     }
 
-    public void setATK(int ATK) {
+    public void setATK(String ATK) {
         this.ATK = ATK;
     }
 
@@ -114,5 +115,25 @@ public class addPokemon {
         }
         public void saveName(ActionEvent actionEvent) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pokemon " + name + " added !"));
+                
+                //correct strings
+                HP = HP.replaceAll("[^0-9]", "");
+                ATK = ATK.replaceAll("[^0-9]", "");
+                DEF = DEF.replaceAll("[^0-9]", "");
+                SP_ATK = SP_ATK.replaceAll("[^0-9]", "");
+                SP_DEF = SP_DEF.replaceAll("[^0-9]", "");
+                SPEED = SPEED.replaceAll("[^0-9]", "");
+                
+                Pokemon p = new Pokemon(
+                        name,
+                        Type.valueOf(type),
+                        Double.valueOf(HP),
+                        Double.valueOf(ATK),
+                        Double.valueOf(DEF),
+                        Double.valueOf(SP_ATK),
+                        Double.valueOf(SP_DEF),
+                        Double.valueOf(SPEED)
+                );
+                Database.instance.insertPokemon(p);
         }
 }

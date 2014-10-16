@@ -22,61 +22,67 @@
                     </p:inputText>
                     <p:message for="name" />
                     
-                    <h:outputLabel for="type" value="Type: *" />
-                    <p:inputText id="type"
-                        value="#{addPokemon.type}" required="true" label="Type">
-                        <f:validateLength minimum="2" />
-                    </p:inputText>
-                    <p:message for="type" />
+                    <h:outputLabel for="typeInput" value="Type: *" />                  
+                    <p:selectOneMenu id="typeInput" value="#{addPokemon.type}">
+                        <f:selectItems itemLabel="#{type.name}" var="type" value="#{database.allTypes}" />
+                    </p:selectOneMenu>
                     
-                    <h:outputLabel for="physicalSkill" value="Physical Skill: *" />
-                    <p:inputText id="physicalSkill"
-                        value="#{addPokemon.physicalSkill}" required="true" label="Physical Skill">
-                    </p:inputText>
-                    <p:message for="physicalSkill" />
+                    <p:message for="typeInput" />
                     
-                    <h:outputLabel for="specialSkill" value="Special Skill: *" />
-                    <p:inputText id="specialSkill"
-                        value="#{addPokemon.specialSkill}" required="true" label="Special Skill">
-                    </p:inputText>
-                    <p:message for="specialSkill" />
+                    <h:outputLabel for="pskillInput" value="Physical Skill: *" />
+                    <p:selectOneMenu id="pskillInput" value="#{addPokemon.physicalSkill}">
+                        <f:selectItems itemLabel="#{skill.name}" itemValue="#{skill.name}" var="skill" value="#{database.allPhysicalSkills}" />
+                    </p:selectOneMenu>
+                    <p:message for="pskillInput" />
+                    
+                    <h:outputLabel for="sskillInput" value="Special Skill: *" />
+                    <p:selectOneMenu id="sskillInput" value="#{addPokemon.specialSkill}">
+                        <f:selectItems itemLabel="#{skill.name}" itemValue="#{skill.name}" var="skill" value="#{database.allSpecialSkills}" />
+                    </p:selectOneMenu>
+                    <p:message for="sskillInput" />
                     
                     <h:outputLabel for="HP" value="HP: *" />
-                    <p:inputText id="HP"
+                    <p:spinner id="HP"
+                        min="0" max="150" stepFactor="10"
                         value="#{addPokemon.HP}" required="true" label="HP">
-                    </p:inputText>
+                    </p:spinner>
                     <p:message for="HP" />
                     
 
-                    <h:outputLabel for="ATKK" value="ATK: *" />
-                    <h:panelGrid columns="1" style="margin-bottom: 10px">
-                        <p:inputText id="ATK" value="#{addPokemon.ATK}" />
-                        <p:slider for="ATK" />
-                    </h:panelGrid>
+                    <h:outputLabel for="ATK" value="ATK: *" />
+                    <p:spinner id="ATK" 
+                        min="0" max="150" stepFactor="10" required="true"
+                        value="#{addPokemon.ATK}" 
+                        label="ATK"
+                    />
                     <p:message for="ATK" />
                     
                     <h:outputLabel for="DEF" value="DEF : *" />
-                    <p:inputText id="DEF"
+                    <p:spinner id="DEF"
+                        min="0" max="150" stepFactor="10"
                         value="#{addPokemon.DEF}" required="true" label="DEF">
-                    </p:inputText>
+                    </p:spinner>
                     <p:message for="DEF" />
                     
                     <h:outputLabel for="SP_ATK" value="SP_ATK : *" />
-                    <p:inputText id="SP_ATK"
+                    <p:spinner id="SP_ATK"
+                        min="0" max="150" stepFactor="10"
                         value="#{addPokemon.SP_ATK}" required="true" label="SP_ATK">
-                    </p:inputText>
+                    </p:spinner>
                     <p:message for="SP_ATK" />
                     
                     <h:outputLabel for="SP_DEF" value="SP_DEF : *" />
-                    <p:inputText id="SP_DEF"
+                    <p:spinner id="SP_DEF"
+                        min="0" max="150" stepFactor="10"
                         value="#{addPokemon.SP_DEF}" required="true" label="SP_DEF">
-                    </p:inputText>
+                    </p:spinner>
                     <p:message for="SP_DEF" />
                     
                     <h:outputLabel for="SPEED" value="SPEED : *" />
-                    <p:inputText id="SPEED"
+                    <p:spinner id="SPEED"
+                        min="0" max="150" stepFactor="10"
                         value="#{addPokemon.SPEED}" required="true" label="SPEED">
-                    </p:inputText>
+                    </p:spinner>
                     <p:message for="SPEED" />
                     
                     <h:outputLabel for="GIF" value="GIF : *" />
