@@ -25,4 +25,30 @@
         <param-name>primefaces.THEME</param-name>  
         <param-value>excite-bike</param-value>  
     </context-param> 
+    
+     <!-- ############################################# -->
+<!-- # File upload                                      # -->
+<!-- ############################################# -->
+<filter>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <filter-class>
+        org.primefaces.webapp.filter.FileUploadFilter
+    </filter-class>
+    <init-param>
+        <param-name>thresholdSize</param-name>
+        <param-value>51200</param-value>
+    </init-param>
+     <!-- Optional 
+    <init-param>
+        <param-name>uploadDirectory</param-name>
+        <param-value>/var/bcom/temp</param-value>
+    </init-param>
+     -->
+</filter>
+
+<filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+</filter-mapping>
+
 </web-app>
