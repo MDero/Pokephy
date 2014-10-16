@@ -1,0 +1,133 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    
+    
+    
+    <h2>ADD A POKEMON</h2>
+   
+    
+    <h:form id="form">
+            <p:panel id="panel" header="New pokemon" style="margin-bottom:10px;">
+                <p:messages id="messages" />
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="name" value="Name: *" />
+                    <p:inputText id="name"
+                        value="#{addPokemon.name}" required="true" label="Name">
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                    <p:message for="name" />
+                    
+                    <h:outputLabel for="type" value="Type: *" />
+                    <p:inputText id="type"
+                        value="#{addPokemon.type}" required="true" label="Type">
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                    <p:message for="type" />
+                    
+                    <h:outputLabel for="physicalSkill" value="Physical Skill: *" />
+                    <p:inputText id="physicalSkill"
+                        value="#{addPokemon.physicalSkill}" required="true" label="Physical Skill">
+                    </p:inputText>
+                    <p:message for="physicalSkill" />
+                    
+                    <h:outputLabel for="specialSkill" value="Special Skill: *" />
+                    <p:inputText id="specialSkill"
+                        value="#{addPokemon.specialSkill}" required="true" label="Special Skill">
+                    </p:inputText>
+                    <p:message for="specialSkill" />
+                    
+                    <h:outputLabel for="HP" value="HP: *" />
+                    <p:inputText id="HP"
+                        value="#{addPokemon.HP}" required="true" label="HP">
+                    </p:inputText>
+                    <p:message for="HP" />
+                    
+
+                    <h:outputLabel for="ATKK" value="ATK: *" />
+                    <h:panelGrid columns="1" style="margin-bottom: 10px">
+                        <p:inputText id="ATK" value="#{addPokemon.ATK}" />
+                        <p:slider for="ATK" />
+                    </h:panelGrid>
+                    <p:message for="ATK" />
+                    
+                    <h:outputLabel for="DEF" value="DEF : *" />
+                    <p:inputText id="DEF"
+                        value="#{addPokemon.DEF}" required="true" label="DEF">
+                    </p:inputText>
+                    <p:message for="DEF" />
+                    
+                    <h:outputLabel for="SP_ATK" value="SP_ATK : *" />
+                    <p:inputText id="SP_ATK"
+                        value="#{addPokemon.SP_ATK}" required="true" label="SP_ATK">
+                    </p:inputText>
+                    <p:message for="SP_ATK" />
+                    
+                    <h:outputLabel for="SP_DEF" value="SP_DEF : *" />
+                    <p:inputText id="SP_DEF"
+                        value="#{addPokemon.SP_DEF}" required="true" label="SP_DEF">
+                    </p:inputText>
+                    <p:message for="SP_DEF" />
+                    
+                    <h:outputLabel for="SPEED" value="SPEED : *" />
+                    <p:inputText id="SPEED"
+                        value="#{addPokemon.SPEED}" required="true" label="SPEED">
+                    </p:inputText>
+                    <p:message for="SPEED" />
+                    
+                    <h:outputLabel for="GIF" value="GIF : *" />
+                    <p:inputText id="GIF"
+                        value="#{addPokemon.GIF}" required="true" label="GIF">
+                    </p:inputText>
+                    <p:message for="GIF" />
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton value="Submit" update="panel,display" id="ajax"
+             actionListener="#{addPokemon.saveName}" styleClass="ui-priority-primary"/>
+            
+            <p:panel id="display" header="Résultat" style="margin-top:10px;">
+                <h:panelGrid columns="2">
+                    <h:graphicImage value="#{addPokemon.GIF}" width="50px" height="50px"/> 
+                    
+                    
+                    <h:outputText value="Name: " />
+                    <h:outputText value="#{addPokemon.name}" />
+                    
+                    <h:outputText value="Type: " />
+                    <h:outputText value="#{addPokemon.type}" />
+                    
+                    <h:outputText value="Physical Skill: " />
+                    <h:outputText value="#{addPokemon.physicalSkill}" />
+                    
+                    <h:outputText value="Special Skill: " />
+                    <h:outputText value="#{addPokemon.specialSkill}" />
+                    
+                    <h:outputText value="HP: " />
+                    <h:outputText value="#{addPokemon.HP}" />
+                    
+                    <h:outputText value="ATK: " />
+                    <h:outputText value="#{addPokemon.ATK}" />
+                    
+                    <h:outputText value="DEF: " />
+                    <h:outputText value="#{addPokemon.DEF}" />
+                    
+                    <h:outputText value="SP_ATK: " />
+                    <h:outputText value="#{addPokemon.SP_ATK}" />
+                    
+                    <h:outputText value="SP_DEF: " />
+                    <h:outputText value="#{addPokemon.SP_DEF}" />
+                    
+                    <h:outputText value="SPEED:" />
+                    <h:outputText value="#{addPokemon.SPEED}" />
+                    
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+
+
+
+</ui:composition>

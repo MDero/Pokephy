@@ -37,7 +37,9 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
         <p:tab title="Statistics" id="tab_statistics">
             <ui:include src="/statisticspage.xhtml" />
         </p:tab>
-               
+        <p:tab title="Add a Pokemon" id="tab_addpokemon">
+            <ui:include src="/addPokemon.xhtml" />
+        </p:tab>       
     </p:tabView>
         
     <!-- POKEDETAIL WIDGET: placing it here makes it visible even when changing tab ! -->
@@ -87,11 +89,13 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     </p:dialog>    
     
     <!-- DOCK MENU AT THE BOTTOM OF THE PAGE -->
+    <h:form>
     <p:dock position="bottom">
         <p:menuitem value="Home" icon="resources/images/pokeball.png" url="index.xhtml"/>
         <p:menuitem value="Fight!" icon="resources/images/fight.png" url="#"/>
         <p:menuitem value="Search" icon="resources/images/search.png" url="#"/>
         <p:menuitem value="Settings" icon="resources/images/settings.png" url="#" onclick="PF('settingsDialog').show()" />
     </p:dock>
+        </h:form>
     </h:body>
 </html>
