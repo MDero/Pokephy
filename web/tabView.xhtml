@@ -64,12 +64,31 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
             <p:chart type="bar" model="#{chartView.createStatsBarModel(dataGridView.selectedPokemon)}" style="height:300px"/>
         </p:outputPanel>
     </p:dialog>
-        
+    
+    <!-- SETTINGS WIDGET -->
+    <p:dialog header="Settings" widgetVar="settingsDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="settingsPane" style="text-align:center;">
+            
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:outputLabel for="advanced" value="UI Theme:" /> 
+                <p:themeSwitcher id="advanced" style="width:165px" effect="fade" var="t">
+                    <f:selectItem itemLabel="Choose Theme" itemValue="" />  
+                    <f:selectItems value="#{themeSwitcherView.themes}" var="theme" itemLabel="" itemValue="" />
+                    <p:ajax listener="#{themeSwitcherView.testListener()}" />
+                </p:themeSwitcher>
+            </h:panelGrid>
+        </h:form>
+            
+        </p:outputPanel>
+    </p:dialog>    
+    
+    <!-- DOCK MENU AT THE BOTTOM OF THE PAGE -->
     <p:dock position="bottom">
         <p:menuitem value="Home" icon="resources/images/pokeball.png" url="index.xhtml"/>
         <p:menuitem value="Fight!" icon="resources/images/fight.png" url="#"/>
         <p:menuitem value="Search" icon="resources/images/search.png" url="#"/>
-        <p:menuitem value="Settings" icon="resources/images/settings.png" url="#"/>
+        <p:menuitem value="Settings" icon="resources/images/settings.png" url="#" onclick="PF('settingsDialog').show()" />
     </p:dock>
     </h:body>
 </html>
