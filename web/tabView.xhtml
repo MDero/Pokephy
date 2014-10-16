@@ -12,11 +12,14 @@ xmlns:f="http://java.sun.com/jsf/core"
 xmlns:p="http://primefaces.org/ui"
 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-      <title>Vincent test page</title>		
-      <h:outputStylesheet name="resources/css/style.css"  />
+      <title>Vincent test page</title>	
+      <h:outputStylesheet library="css" name="style.css"  /> 
     </h:head>
+    
     <h:body>
-        
+    <h:panelGrid styleClass="centered">
+       <h:graphicImage value="resources/images/pokemon_header.png" /> 
+    </h:panelGrid>          
     <!-- TAB MENU -->
     <p:tabView id="tabView" scrollable="true">
         <p:tab title="Encyclopedia" id="tab_encyclopedia">
@@ -90,5 +93,6 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
         <p:menuitem value="Search" icon="resources/images/search.png" url="#"/>
         <p:menuitem value="Settings" icon="resources/images/settings.png" url="#" onclick="PF('settingsDialog').show()" />
     </p:dock>
+        </h:form>
     </h:body>
 </html>
