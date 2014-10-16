@@ -325,6 +325,14 @@ public class Database {
         Pokemon p2 = new Pokemon("charmander", Type.Fire, 39, 52, 43, 60, 50, 65);
         Pokemon p3 = new Pokemon("squirtle", Type.Water, 44, 48, 65, 50, 64, 43);
         
+        Pokemon p12 = new Pokemon("ivysaur",Type.Grass, 60,62,63,80,80,60);
+        Pokemon p22 = new Pokemon("charmeleon", Type.Fire, 58,64,58,80,65,80);
+        Pokemon p32 = new Pokemon("wartortle", Type.Water, 59,63,80,65,80,58);
+        
+        Pokemon p13 = new Pokemon("venusaur",Type.Grass, 80,82,83,100,100,80);
+        Pokemon p23 = new Pokemon("charizard", Type.Fire, 78,84,78,109,85,100);
+        Pokemon p33 = new Pokemon("blastoise", Type.Water, 79,83,100,85,105,78);
+        
         //create a dummy trainer
         Trainer sacha = new Trainer("Sacha");
         sacha.pool.add(p1);
@@ -335,6 +343,14 @@ public class Database {
         this.insertPokemon(p1);
         this.insertPokemon(p2);
         this.insertPokemon(p3);
+        
+        this.insertPokemon(p12);
+        this.insertPokemon(p22);
+        this.insertPokemon(p32);
+        
+        this.insertPokemon(p13);
+        this.insertPokemon(p23);
+        this.insertPokemon(p33);
         
         //insert trainer
         this.insertTrainer(sacha);

@@ -109,8 +109,9 @@ public class ChartView implements Serializable {
             String red, blue;
             red = "2F";
             blue = "36";
-            int greenPlus = 31;
-            double redLevel = 125.0, greenLevel = 150.0;
+            int greenPlus = 0;
+            double greenLevel = 130.0;
+            double redLevel = 125.0-hpRatio*greenLevel;
             
             hpColor    = Integer.toHexString((int) ((1.0-hpRatio)    *redLevel)) +Integer.toHexString((int) (hpRatio    *greenLevel) +greenPlus) +blue;
             atkColor   = Integer.toHexString((int) ((1.0-atkRatio)   *redLevel)) +Integer.toHexString((int) (atkRatio   *greenLevel) +greenPlus) +blue;

@@ -140,7 +140,7 @@ public class Pokephy {
         public double getSPEED(){ return SPEED; }
         public void setATK(double ATK){ this.ATK = ATK; }
         public void setDEF(double DEF){ this.DEF = DEF; }
-        public void setSPATK(double SP_ATK){ this.SP_ATK = ATK; }
+        public void setSPATK(double SP_ATK){ this.SP_ATK = SP_ATK; }
         public void setSPDEF(double SP_DEF){ this.SP_DEF = SP_DEF; }
         public void setSPEED(double SPEED){ this.SPEED = SPEED; }
         
