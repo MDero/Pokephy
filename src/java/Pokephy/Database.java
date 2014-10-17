@@ -613,6 +613,44 @@ public class Database {
         return getPokemonFromCurrentRow(this.getResultsOfQuery("SELECT * FROM entity WHERE typeEntity='POKEMON' AND valueEntity='"+name+"'", true));
     }
     
+    private Trainer getTrainerFromCurrentRow(ResultSet results)
+    {
+        Integer id = extractNumber(results,"idEntity");
+        String valueEntity = extractString(results, "valueEntity");
+        Trainer t = new Trainer(valueEntity);
+        t.setId(id);
+        
+        ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE idEntity = "+id);
+        try {
+            while (rs.next())
+            {
+                String name = extractString(rs, "name");
+                String value = extractString(rs , "value");
+                
+                switch (name) {
+                    case "OWN":
+                        String[] pokemon_ids = value.split(",");
+                        for (String p_id_number : pokemon_ids)
+                        {
+                            String p_id = p_id_number.substring(0,p_id_number.indexOf("("));
+                            System.out.println(p_id);
+                            for (Pokemon p : getAllPokemon())
+                                if (p.getId() == Integer.valueOf(p_id))
+                                    t.pool.add(p);
+                        }
+                        break;
+                }
+                    
+                
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return t;
+    }
+    
     /* LISTS OF ALL */
     public List<Named> getAll(String typeEntity){
       ArrayList<Named> list = new ArrayList<>();
@@ -627,6 +665,9 @@ public class Database {
                         break;
                     case "SKILL":
                         list.add(getSkillFromCurrentRow(rs));
+                        break;
+                    case "TRAINER":
+                        list.add(getTrainerFromCurrentRow(rs));
                         break;
                 }
                     
@@ -670,4 +711,84 @@ public class Database {
     {
         return getAllSkills(SkillType.Special);
     }
+    public List<Trainer> getAllTrainer()
+    {
+        ArrayList<Trainer> trainers = new ArrayList<>();
+        for (Named n : getAll("TRAINER"))
+            trainers.add((Trainer) n);
+        return trainers;
+    }
+    
+    
+    /* SORTED LISTS */
+    private List<Pokemon> sortedList(String caracteristic,String orderBy)
+    {
+      String typeEntity = "POKEMON";
+      ArrayList<Pokemon> list = new ArrayList<>();
+      
+      ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='"+typeEntity+"' AND name='"+caracteristic+"' ORDER BY "+orderBy);
+        try {
+            while (rs.next())
+            {
+                switch (typeEntity){
+                    case "POKEMON":
+                        list.add(getPokemonFromCurrentRow(rs));
+                        break;
+                }
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      return list;
+    }
+    public List<Pokemon> getPokemonSortedByHP_DESC()
+    {
+        return sortedList("HP","DESC");
+    }
+    public List<Pokemon> getPokemonSortedByHP_ASC()
+    {
+        return sortedList("HP","ASC");
+    }
+    public List<Pokemon> getPokemonSortedByATK_DESC()
+    {
+        return sortedList("ATK","DESC");
+    }
+    public List<Pokemon> getPokemonSortedByATK_ASC()
+    {
+        return sortedList("ATK","ASC");
+    }
+    public List<Pokemon> getPokemonSortedByDEF_DESC()
+    {
+        return sortedList("DEF","DESC");
+    }
+    public List<Pokemon> getPokemonSortedByDEF_ASC()
+    {
+        return sortedList("DEF","ASC");
+    }
+    public List<Pokemon> getPokemonSortedBySPDEF_DESC()
+    {
+        return sortedList("SP_DEF","DESC");
+    }
+    public List<Pokemon> getPokemonSortedBySPDEF_ASC()
+    {
+        return sortedList("SP_DEF","ASC");
+    }
+    public List<Pokemon> getPokemonSortedBySPATK_DESC()
+    {
+        return sortedList("SP_ATK","DESC");
+    }
+    public List<Pokemon> getPokemonSortedBySPATK_ASC()
+    {
+        return sortedList("SP_ATK","ASC");
+    }
+    public List<Pokemon> getPokemonSortedBySPEED_DESC()
+    {
+        return sortedList("SPEED","DESC");
+    }
+    public List<Pokemon> getPokemonSortedBySPEED_ASC()
+    {
+        return sortedList("SPEED","ASC");
+    }  
+                    
 }

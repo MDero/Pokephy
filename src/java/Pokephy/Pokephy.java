@@ -41,6 +41,9 @@ public class Pokephy {
     public static class Trainer extends Named
     {
         public ArrayList<Pokemon> pool = new ArrayList<>();
+        public ArrayList<Pokemon> getPool(){ return pool; }
+        public void setPool(ArrayList<Pokemon> pokemons){ pool = pokemons; }
+        
         public Pokemon[] team = new Pokemon[6];
         
         public Trainer(String name)

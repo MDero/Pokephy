@@ -10,11 +10,28 @@ xmlns:h="http://java.sun.com/jsf/html"
 xmlns:f="http://java.sun.com/jsf/core"
 xmlns:p="http://primefaces.org/ui"
 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <head>
+    <h:head>
         <title>Log in page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </h:head>
     <body>
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            
+            <h:panelGrid id="panel" columns="2" cellpadding="5">
+                <p:outputLabel for="login" value="Login : *"/>
+                <p:inputText id ="login" value="#{users.login}" />
+                
+                <p:outputLabel for="password" value="Password : *"/>
+                <p:password  id="password" value="#{users.password}" />
+                
+                <p:commandButton
+                                value="Submit" update="growl" id="ajax"
+                                actionListener="#{users.checkValidity()}" styleClass="ui-priority-primary"
+                                 />
+                <p:button outcome="#{users.checkValidity() ? 'tabView' : 'login' }" value="Submit"/>
+            </h:panelGrid>
+        </h:form>      
         
     </body>
 </html>

@@ -6,7 +6,6 @@
     xmlns:p="http://primefaces.org/ui">
    
     <h2>Manage your team</h2>
-    <p>Drag and drop view of the 6 current</p>
     
 <!--    <h:form>
     <p:notificationBar position="bottom" effect="slide" styleClass="top" widgetVar="bar">
@@ -20,8 +19,7 @@
 <h:form>
     <p:growl id="msg" showDetail="true" escape="false" />
     
-    <h3>PickList on Steroids: Pojo Support with Effect, Captions, Custom Content, Reordering, Filtering, Checkboxes and Ajax Transfer</h3>
-    <p:pickList id="teamPickList" value="#{pickListView.createDual(database.allPokemon)}" var="pokemon" 
+    <p:pickList id="teamPickList" value="#{pickListView.createDual(users.current.pool)}" var="pokemon" 
                 effect="fold"
                 itemValue="#{pokemon}" itemLabel="#{pokemon.name}" 
                 showSourceControls="true" showTargetControls="true" showCheckbox="true"
