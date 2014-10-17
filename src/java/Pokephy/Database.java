@@ -726,7 +726,7 @@ public class Database {
       String typeEntity = "POKEMON";
       ArrayList<Pokemon> list = new ArrayList<>();
       
-      ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='"+typeEntity+"' AND name='"+caracteristic+"' ORDER BY "+orderBy);
+      ResultSet rs = this.getResultsOfQuery("SELECT * FROM "+megatable+" WHERE typeEntity='"+typeEntity+"' AND name='"+caracteristic+"' ORDER BY value "+orderBy);
         try {
             while (rs.next())
             {

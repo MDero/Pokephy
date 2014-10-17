@@ -5,7 +5,9 @@
  */
 package Pokephy;
 
+import Pokephy.Pokephy.Named;
 import Pokephy.Pokephy.Pokemon;
+import Pokephy.Pokephy.Skill;
 import Pokephy.Pokephy.Type;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -134,6 +136,18 @@ public class addPokemon {
                         Double.valueOf(SP_DEF),
                         Double.valueOf(SPEED)
                 );
+                Skill pskill=null, sskill=null;
+                for (Named n : Database.instance.getAllPhysicalSkills())
+                    if (n.getName().equals(physicalSkill))
+                        pskill = (Skill)n;
+                for (Named n : Database.instance.getAllSpecialSkills())
+                    if (n.getName().equals(specialSkill))
+                        sskill = (Skill)n;
+                if (pskill!=null)
+                    p.physicalSkill=pskill;
+                if (sskill!=null)
+                    p.specialSkill=sskill;
+                
                 Database.instance.insertPokemon(p);
         }
 }

@@ -26,10 +26,11 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
                 <p:password  id="password" value="#{users.password}" />
                 
                 <p:commandButton
-                                value="Submit" update="growl" id="ajax"
-                                actionListener="#{users.checkValidity()}" styleClass="ui-priority-primary"
-                                 />
-                <p:button outcome="#{users.checkValidity() ? 'tabView' : 'login' }" value="Submit"/>
+                    action="#{users.directionAfterLoginAttempt()}"
+                    value="Submit" update="ajax" id="ajax"
+                    ajax="false"
+                    styleClass="ui-priority-primary"
+                    />
             </h:panelGrid>
         </h:form>      
         

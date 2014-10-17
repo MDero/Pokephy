@@ -90,19 +90,122 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <!-- SEARCH WIDGET --> 
     <p:dialog header="Search" widgetVar="searchDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="searchPane" style="text-align:center;">
+    <h:form id="form">
+            <p:panel id="searchPane" header="Look for Pokemon" style="margin-bottom:10px;">
+                
+                <p:messages id="messages" />
+                
+                <p:accordionPanel>
+                    <p:tab title="by Name">
+                        
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel for="name" value="Name: " />
+                            <p:inputText id="name"
+                                value="#{searchParams.name}" required="false" label="Name">
+                            </p:inputText>
+                            <p:message for="name" />
+                        </h:panelGrid>
+                        
+                    </p:tab>
+                    <p:tab title="by Type">
+                        
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel for="typeInput" value="Type: " />                  
+                            <p:selectOneMenu id="typeInput" value="#{searchParams.type}">
+                                <f:selectItems itemLabel="#{type.name}" var="type" value="#{database.allTypes}" />
+                            </p:selectOneMenu>
+                            <p:message for="typeInput" />
+                        </h:panelGrid>
+                        
+                    </p:tab>
+                    <p:tab title="by Physical Skill">
+                        
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel for="pskillInput" value="Physical Skill: " />
+                            <p:selectOneMenu id="pskillInput" value="#{searchParams.pskill}">
+                                <f:selectItems itemLabel="#{skill.name}" itemValue="#{skill.name}" var="skill" value="#{database.allPhysicalSkills}" />
+                            </p:selectOneMenu>
+                            <p:message for="pskillInput" />
+                        </h:panelGrid>
+                        
+                    </p:tab>
+                    <p:tab title="by Special Skill">
+                        
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel for="sskillInput" value="Special Skill: " />
+                            <p:selectOneMenu id="sskillInput" value="#{searchParams.sskill}">
+                                <f:selectItems itemLabel="#{skill.name}" itemValue="#{skill.name}" var="skill" value="#{database.allSpecialSkills}" />
+                            </p:selectOneMenu>
+                            <p:message for="sskillInput" />
+                        </h:panelGrid>
+                        
+                    </p:tab>
+                    <p:tab title="by Stat">
+                        
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel for="statInput" value="Order by : " />
+                            <p:selectOneMenu id="statInput" value="#{searchParams.statFilter}">
+                                <f:selectItems itemLabel="#{stat}" itemValue="#{stat.toUpperCase()}" var="stat" value="#{searchParams.statFilters}" />
+                            </p:selectOneMenu>
+                            <p:message for="statInput" />
+                        </h:panelGrid>
+                        
+                    </p:tab>
+                    
+                </p:accordionPanel>
+                                  
+            </p:panel>
+            <p:panel style="text-align: center">
+                <p:commandButton onclick="PF('searchResultsDialog').show()" actionListener="#{searchParams.generateResults}" value="Submit" update="searchPane" id="ajax" styleClass="ui-priority-primary" />
+            </p:panel>
+            
+        </h:form>
+    </p:dialog>
+    
+    <p:dialog header="Search results" widgetVar="searchResultsDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:dataTable var="pokemon" value="#{searchParams.results}">
+            <p:column headerText="☺" width="35px">
+                <h:graphicImage value="resources/images/#{pokemon.name}.gif" width="30px" height="30px"/> 
+            </p:column>
+            
+            <p:column headerText="Name">
+                <h:outputText value="#{pokemon.name}" />
+            </p:column>
 
-        </p:outputPanel>
-    </p:dialog>   
+            <p:column headerText="HP">
+                <h:outputText value="#{pokemon.HP}" />
+            </p:column>
+
+            <p:column headerText="ATK">
+                <h:outputText value="#{pokemon.ATK}" />
+            </p:column>
+
+            <p:column headerText="DEF">
+                <h:outputText value="#{pokemon.DEF}" />
+            </p:column>
+            
+            <p:column headerText="SPATK">
+                <h:outputText value="#{pokemon.SPATK}" />
+            </p:column>
+            
+            <p:column headerText="SPDEF">
+                <h:outputText value="#{pokemon.SPDEF}" />
+            </p:column>
+            
+            <p:column headerText="SPEED">
+                <h:outputText value="#{pokemon.SPEED}" />
+            </p:column>
+        </p:dataTable>
+    </p:dialog>
     
     <!-- DOCK MENU AT THE BOTTOM OF THE PAGE -->
     <h:form>
-    <p:dock position="bottom">
-        <p:menuitem value="Home" icon="resources/images/pokeball.png" url="index.xhtml"/>
-        <p:menuitem value="Fight!" icon="resources/images/fight.png" url="tabView.xhtml#tabView:tab_fight" update="tabView" />
-        <p:menuitem value="Search" icon="resources/images/search.png" url="#"/>
-        <p:menuitem value="Settings" icon="resources/images/settings.png" url="#" onclick="PF('settingsDialog').show()" />
-    </p:dock>
-        </h:form>
+        <p:dock position="bottom">
+            <p:menuitem value="Home" icon="resources/images/pokeball.png" url="index.xhtml"/>
+            <p:menuitem value="Fight!" icon="resources/images/fight.png" url="tabView.xhtml#tabView:tab_fight" update="tabView" />
+            <p:menuitem value="Search" icon="resources/images/search.png" url="#" onclick="PF('searchDialog').show()"/>
+            <p:menuitem value="Settings" icon="resources/images/settings.png" url="#" onclick="PF('settingsDialog').show()" />
+        </p:dock>
+    </h:form>
     </h:body>
 </html>

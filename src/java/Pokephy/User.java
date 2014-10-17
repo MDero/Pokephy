@@ -67,6 +67,9 @@ public class User implements Serializable{
         }
         return false;
     }
+    public String directionAfterLoginAttempt(){
+        return checkValidity() ? "tabView" : "login";
+    }
     
     
 }
